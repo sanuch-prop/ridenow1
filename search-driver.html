@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Поиск — RideNow</title>
+<style>
+  :root{
+    --ink:#eaf2ff; --muted:#a6b5cc; --stroke:rgba(255,255,255,.18);
+    --glass1:rgba(255,255,255,.08); --glass2:rgba(255,255,255,.04);
+    --g1:#b7a7ff; --g2:#8bd6c9; --accent:#b7a7ff;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    color:var(--ink); background:#0b0f12;
+    display:flex; flex-direction:column;
+  }
+  .bg:before{
+    content:""; position:fixed; inset:0;
+    background:
+      radial-gradient(45% 50% at 20% 15%, rgba(183,167,255,.25), transparent 65%),
+      radial-gradient(45% 55% at 85% 85%, rgba(139,214,201,.22), transparent 65%),
+      linear-gradient(#0b0f12,#0b0f12);
+    filter: saturate(120%);
+    z-index:-1;
+  }
+
+  /* ===== единый контейнер приложения ===== */
+  main{
+    flex:1 0 auto;
+    padding:16px 2vw;
+    padding-bottom:calc(90px + env(safe-area-inset-bottom)); /* место под фикс-навбар */
+    display:flex; justify-content:flex-start;
+  }
+
+  .card{
+    width:min(560px, 96vw); margin:8px auto 0;
+    border-radius:22px;
+    background:linear-gradient(180deg,var(--glass1),var(--glass2));
+    border:1px solid var(--stroke);
+    box-shadow: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.22);
+    backdrop-filter: blur(14px) saturate(140%);
+  }
+  .inner{ padding:16px 16px 24px }
+  .brand{ font-weight:900; letter-spacing:.2px; display:flex; gap:8px; align-items:center; opacity:.95}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(180deg,#9de9d7,#b7a7ff)}
+  h1{ margin:8px 0 12px; font-size:28px; letter-spacing:.2px }
+
+  /* блоки формы */
+  .block{
+    margin:12px 0; padding:12px; border-radius:16px;
+    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+    border:1px solid var(--stroke);
+    overflow:hidden;
+  }
+
+  /* верх: откуда — swap — куда */
+  .route-row{
+    display:grid; grid-template-columns: minmax(0,1fr) 44px minmax(0,1fr);
+    gap:10px; align-items:center;
+  }
+  .pill-input{
+    display:flex; align-items:center; gap:10px; height:48px;
+    padding:0 12px; border-radius:999px; border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.06));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.25);
+    min-width:0;
+  }
+  .pill-input input{
+    flex:1; min-width:0; background:transparent; border:0; outline:0; color:var(--ink); font-size:15px;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .swap{
+    width:44px; height:44px; border-radius:999px; display:grid; place-items:center;
+    border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(183,167,255,.35), rgba(139,214,201,.25));
+    cursor:pointer;
+  }
+
+  /* дата + удобства */
+  .tworow{ display:grid; grid-template-columns: 1fr 1fr; gap:10px }
+  .mini-btn{
+    height:48px; border-radius:14px; border:1px solid var(--stroke);
+    padding:0 12px; display:flex; align-items:center; justify-content:space-between;
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+    cursor:pointer; font-weight:700;
+  }
+  .mini-btn .value{ color:var(--muted); font-weight:600; font-size:14px }
+
+  /* выбранные удобства – чипы */
+  .chosen{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; grid-column:1/-1; }
+  .chip{
+    padding:6px 10px; border-radius:999px; border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.08));
+    font-size:14px; display:flex; align-items:center; gap:6px
+  }
+
+  /* CTA */
+  .cta{
+    height:54px; border-radius:16px; width:100%; margin-top:14px;
+    border:0; cursor:pointer; font-weight:900; font-size:18px; letter-spacing:.3px; color:#0b0f12;
+    background:linear-gradient(90deg, #b7a7ff, #8bd6c9);
+    box-shadow: 0 10px 24px rgba(183,167,255,.25);
+  }
+
+  /* ====== ШТОРКИ ====== */
+  .sheet{
+    position:fixed; left:0; right:0; bottom:-100%;
+    margin:auto; width:min(560px, 96vw);
+    background:linear-gradient(180deg, rgba(20,24,32,.88), rgba(20,24,32,.86));
+    border:1px solid var(--stroke); border-radius:16px 16px 0 0;
+    box-shadow: 0 -30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.2);
+    backdrop-filter: blur(16px) saturate(160%);
+    transition: transform .22s ease, bottom .22s ease;
+    transform: translateY(16px);
+    z-index:50;
+  }
+  .sheet.open{ bottom:0; transform: translateY(0) }
+  .sheet .grip{ width:48px;height:5px;border-radius:999px;background:rgba(255,255,255,.25); margin:8px auto }
+  .sheet .body{ padding:8px 12px 14px }
+  .sheet h3{ margin:4px 4px 10px; font-size:18px }
+
+  /* календарь */
+  .cal-head{ display:flex; align-items:center; justify-content:space-between; padding:0 4px 6px }
+  .navbtn{ width:36px; height:36px; border-radius:10px; border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); color:var(--ink); }
+  .cal-grid{ display:grid; grid-template-columns: repeat(7,1fr); gap:6px; padding:6px 2px }
+  .day{
+    height:44px; border-radius:12px; display:grid; place-items:center; cursor:pointer;
+    border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+  }
+  .day.muted{ opacity:.4 }
+  .day.active{ outline:2px solid #8bd6c9; }
+
+  .sheet-actions{ display:flex; gap:10px; margin-top:10px }
+  .btn{
+    height:44px; border-radius:14px; flex:1; border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06)); color:var(--ink); font-weight:800;
+  }
+  .btn.ok{ border:0; color:#0b0f12; background:linear-gradient(90deg, #b7a7ff, #8bd6c9) }
+
+  /* удобства */
+  .amen-grid{ display:flex; flex-wrap:wrap; gap:10px }
+  .amen{
+    padding:10px 12px; border-radius:14px; border:1px solid var(--stroke);
+    background:linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+    cursor:pointer; font-weight:700; display:flex; align-items:center; gap:8px;
+  }
+  .amen.sel{ box-shadow:0 0 0 2px #8bd6c9 inset }
+
+  /* ====== РЕЗУЛЬТАТЫ: карточки ====== */
+  .results-title{ margin:18px 4px 8px; font-weight:900; opacity:.9 }
+  .results{ display:grid; gap:14px; }
+
+  .r-card{
+    border-radius:20px; overflow:hidden;
+    background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.04));
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:0 20px 50px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.15);
+    backdrop-filter:blur(12px) saturate(140%);
+  }
+  .r-top{display:flex; justify-content:space-between; align-items:center; padding:14px 16px;}
+  .r-route{font-weight:900; font-size:20px;}
+  .r-price{font-weight:900; color:#072e12; background:linear-gradient(90deg,#b8ff9c,#7dffcf);
+    padding:6px 12px; border-radius:12px;}
+  .r-driver{display:flex; gap:12px; align-items:center; padding:0 16px 12px;}
+  .r-ava{width:52px;height:52px;border-radius:50%;overflow:hidden; background:#777; flex-shrink:0;}
+  .r-ava img{width:100%;height:100%;object-fit:cover}
+  .r-info{flex:1;}
+  .r-name{display:flex; align-items:center; gap:6px; font-weight:800;}
+  .r-ver{font-size:12px; padding:2px 6px; border-radius:8px;
+    background:linear-gradient(90deg,#8bd6c9,#b7a7ff); color:#0b0f12; font-weight:700;}
+  .r-stars{color:#ffd479; font-size:14px;}
+  .r-car{color:#a6b5cc; font-size:14px;}
+  .r-details{display:flex; gap:12px; font-size:13px; padding:0 16px; margin-bottom:10px; color:#a6b5cc;}
+  .r-details span{display:flex; align-items:center; gap:4px;}
+  .r-amen{display:flex; gap:8px; flex-wrap:wrap; padding:0 16px 12px;}
+  .r-tag{font-size:13px; padding:5px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.18);
+    background:rgba(255,255,255,.07);}
+  .r-photos{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:0 16px 12px;}
+  .r-ph{height:90px; border-radius:12px; overflow:hidden; background:#222; display:grid; place-items:center; color:#888; font-size:12px;}
+  .r-ph img{width:100%;height:100%;object-fit:cover}
+  .r-pass{padding:0 16px 16px;}
+  .r-ptitle{font-weight:800; margin-bottom:6px;}
+  .r-faces{display:flex; gap:8px;}
+  .r-face{width:40px;height:40px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,.25); background:#222;display:grid;place-items:center;color:#888;}
+  .r-face img{width:100%;height:100%;object-fit:cover}
+
+  /* адаптив для узких экранов */
+  @media (max-width:380px){
+    .route-row{ grid-template-columns: minmax(0,.9fr) 38px minmax(0,.9fr); gap:6px }
+    .swap{ width:38px; height:38px }
+    .pill-input{ height:44px }
+  }
+  @media (max-width:330px){
+    .route-row{ grid-template-columns:1fr }
+    .swap{ order:-1; margin:6px auto 2px }
+  }
+
+  /* ===== НИЖНЯЯ НАВИГАЦИЯ (единый layout) ===== */
+  .bottom-shell{
+    position:fixed; left:0; right:0; bottom:0; z-index:1000;
+    padding:0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .bottom-bar{
+    width:100%;
+    background:linear-gradient(180deg, rgba(14,18,24,.65), rgba(14,18,24,.55));
+    border-top:1px solid var(--stroke);
+    backdrop-filter: blur(14px) saturate(140%);
+    display:flex; justify-content:space-around; align-items:stretch;
+    border-radius:18px 18px 0 0; /* скругления только сверху */
+  }
+  .bn-tab{
+    flex:1; text-align:center; text-decoration:none; color:var(--ink);
+    font-size:12px; padding:10px 0 12px;
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+  }
+  .bn-tab .ico{ font-size:18px; line-height:1 }
+  .bn-tab.active{ color:var(--accent) }
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<main>
+  <section class="card">
+    <div class="inner">
+      <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+      <h1>Поиск</h1>
+
+      <!-- ===== Маршрут ===== -->
+      <div class="block">
+        <div class="route-row">
+          <label class="pill-input" aria-label="Откуда">
+            <span>🟢</span>
+            <input id="from" placeholder="Откуда (город)" autocomplete="off">
+          </label>
+          <button class="swap" id="swapBtn" title="Поменять местами">🚗</button>
+          <label class="pill-input" aria-label="Куда">
+            <span>🟠</span>
+            <input id="to" placeholder="Куда (город)" autocomplete="off">
+          </label>
+        </div>
+      </div>
+
+      <!-- ===== Дата + Удобства ===== -->
+      <div class="block tworow">
+        <button class="mini-btn" id="btnDate">
+          <span>Дата</span>
+          <span class="value" id="dateValue">выберите</span>
+        </button>
+        <button class="mini-btn" id="btnAmen">
+          <span>Удобства</span>
+          <span class="value" id="amenCount">нет</span>
+        </button>
+        <div class="chosen" id="chosenWrap"></div>
+      </div>
+
+      <button class="cta" id="findBtn">Найти</button>
+
+      <!-- ===== РЕЗУЛЬТАТЫ ===== -->
+      <div class="results-title">Актуальные поездки (демо)</div>
+      <div class="results">
+        <!-- 1 -->
+        <article class="r-card">
+          <div class="r-top"><div class="r-route">Киев → Одесса</div><div class="r-price">550 ₴</div></div>
+          <div class="r-driver">
+            <div class="r-ava"><img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=200" alt=""></div>
+            <div class="r-info">
+              <div class="r-name">Павел <span class="r-ver">✓</span></div>
+              <div class="r-stars">★★★★☆</div>
+              <div class="r-car">Toyota Camry</div>
+            </div>
+          </div>
+          <div class="r-details">
+            <span>⏰ 08:30 → 13:15</span><span>🛣️ 475 км</span><span>🧍 3 места</span>
+          </div>
+          <div class="r-amen"><div class="r-tag">🎧 Музыка</div><div class="r-tag">💨 Электронки</div><div class="r-tag">❄️ Климат</div></div>
+          <div class="r-photos">
+            <div class="r-ph"><img src="https://images.unsplash.com/photo-1549924231-f129b911e442?w=400" alt=""></div>
+            <div class="r-ph"><img src="https://images.unsplash.com/photo-1606661125322-1d66f2e7f3a7?w=400" alt=""></div>
+            <div class="r-ph">нет фото</div>
+          </div>
+          <div class="r-pass">
+            <div class="r-ptitle">Пассажиры</div>
+            <div class="r-faces">
+              <div class="r-face"><img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200" alt=""></div>
+              <div class="r-face"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200" alt=""></div>
+              <div class="r-face">—</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="r-card">
+          <div class="r-top"><div class="r-route">Львов → Житомир</div><div class="r-price">480 ₴</div></div>
+          <div class="r-driver">
+            <div class="r-ava"><img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=200" alt=""></div>
+            <div class="r-info">
+              <div class="r-name">Анна <span class="r-ver">✓</span></div>
+              <div class="r-stars">★★★★★</div>
+              <div class="r-car">Hyundai Accent</div>
+            </div>
+          </div>
+          <div class="r-details"><span>⏰ 09:10 → 14:05</span><span>🛣️ 420 км</span><span>🧍 3</span></div>
+          <div class="r-amen"><div class="r-tag">🎧 Музыка</div><div class="r-tag">🐾 Животные</div></div>
+          <div class="r-photos">
+            <div class="r-ph"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400" alt=""></div>
+            <div class="r-ph"><img src="https://images.unsplash.com/photo-1517170655190-2d5f6d25b2c2?w=400" alt=""></div>
+            <div class="r-ph"><img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400" alt=""></div>
+          </div>
+          <div class="r-pass"><div class="r-ptitle">Пассажиры</div><div class="r-faces"><div class="r-face">—</div><div class="r-face">—</div><div class="r-face">—</div></div></div>
+        </article>
+
+        <!-- 3 -->
+        <article class="r-card">
+          <div class="r-top"><div class="r-route">Днепр → Киев</div><div class="r-price">630 ₴</div></div>
+          <div class="r-driver">
+            <div class="r-ava"><img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=200" alt=""></div>
+            <div class="r-info">
+              <div class="r-name">Олег</div>
+              <div class="r-stars">★★★★☆</div>
+              <div class="r-car">VW Touran</div>
+            </div>
+          </div>
+          <div class="r-details"><span>⏰ 07:20 → 12:10</span><span>🛣️ 480 км</span><span>🧍 2 места</span></div>
+          <div class="r-amen"><div class="r-tag">🚭 Некурящий<

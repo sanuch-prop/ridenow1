@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Оплата — RideNow</title>
+<style>
+  :root{
+    --ink:#eaf2ff; --muted:#a6b5cc; --stroke:rgba(255,255,255,.18);
+    --glass1:rgba(255,255,255,.10); --glass2:rgba(255,255,255,.06);
+    --g1:#b7a7ff; --g2:#8bd6c9;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#0b0f12;color:var(--ink);font-family:Inter,system-ui,Arial}
+  .bg:before{
+    content:"";position:fixed;inset:0;z-index:-1;
+    background:
+      radial-gradient(60% 55% at 18% 10%, rgba(183,167,255,.22), transparent 60%),
+      radial-gradient(60% 55% at 82% 88%, rgba(139,214,201,.20), transparent 60%),
+      linear-gradient(#0b0f12,#0b0f12);
+    filter:saturate(120%);
+  }
+  .wrap{width:min(720px,96vw);margin:24px auto}
+  .card{
+    border-radius:22px;border:1px solid var(--stroke);
+    background:linear-gradient(180deg,var(--glass1),var(--glass2));
+    box-shadow:0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.22);
+    backdrop-filter:blur(14px) saturate(140%);
+    overflow:hidden;
+  }
+  .inner{padding:18px}
+  .brand{display:flex;gap:8px;align-items:center;font-weight:900}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(180deg,#9de9d7,#b7a7ff)}
+  h1{margin:8px 0 14px;font-size:28px}
+  .block{border:1px solid var(--stroke);border-radius:16px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06));margin-top:10px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media (max-width:640px){.row{grid-template-columns:1fr}}
+  .muted{color:var(--muted)}
+  .mini{font-size:12px;color:var(--muted)}
+  .btn{height:46px;border-radius:14px;border:1px solid var(--stroke);background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.08));color:var(--ink);font-weight:800;padding:0 12px;cursor:pointer}
+  .btn.pri{border:0;color:#0b0f12;background:linear-gradient(90deg,var(--g1),var(--g2))}
+  .payopt{display:flex;align-items:center;gap:10px;border:1px solid var(--stroke);border-radius:14px;padding:10px 12px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06))}
+  .payopt.disabled{opacity:.5;pointer-events:none}
+  .tag{border:1px solid var(--stroke);border-radius:999px;padding:4px 8px;font-size:12px;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.08))}
+  .radio{accent-color:#79e4cc}
+  .summary{display:grid;gap:6px}
+  .sumrow{display:flex;justify-content:space-between;gap:8px}
+  .toPay{font-weight:900;font-size:18px;border-radius:12px;border:1px solid var(--stroke);padding:10px 12px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.06))}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="wrap">
+  <section class="card">
+    <div class="inner">
+      <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+      <h1>Оплата поездки</h1>
+
+      <!-- Способ оплаты -->
+      <div class="block">
+        <div class="mini" style="margin-bottom:8px">Выберите способ. Водитель может принимать наличные, карту или оба варианта.</div>
+
+        <div class="payopt" id="opt-card">
+          <input class="radio" type="radio" name="pay" id="r-card" />
+          <label for="r-card" style="flex:1;cursor:pointer">
+            <div><strong>Карта по умолчанию</strong> <span id="cardMask" class="muted">**** 4242</span></div>
+            <div class="mini">из профиля</div>
+          </label>
+          <span class="tag">Visa/Mastercard</span>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <label class="payopt" id="opt-apple" for="r-apple">
+            <input class="radio" type="radio" name="pay" id="r-apple">
+            <div style="flex:1"><strong> Apple&nbsp;Pay</strong><div class="mini">быстрая оплата</div></div>
+          </label>
+          <label class="payopt" id="opt-google" for="r-google">
+            <input class="radio" type="radio" name="pay" id="r-google"><div style="flex:1"><strong>GPay Google&nbsp;Pay</strong><div class="mini">быстрая оплата</div></div>
+          </label>
+        </div>
+
+        <div class="row" style="margin-top:10px">
+          <label class="payopt" id="opt-mono" for="r-mono">
+            <input class="radio" type="radio" name="pay" id="r-mono">
+            <div style="flex:1"><strong>mono</strong><div class="mini">оплата через monobank</div></div>
+          </label>
+          <label class="payopt" id="opt-cash" for="r-cash">
+            <input class="radio" type="radio" name="pay" id="r-cash">
+            <div style="flex:1"><strong>Наличные</strong><div class="mini">водителю на месте</div></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Итог с комиссиями -->
+      <div class="block">
+        <div class="summary">
+          <div class="sumrow"><span class="muted">Билет</span><span id="fare">—</span></div>
+          <div class="sumrow"><span class="muted">Сервисный сбор</span><span id="svc">—</span></div>
+          <div class="sumrow" id="row-proc"><span class="muted">Процессинг (карта)</span><span id="proc">—</span></div>
+          <div class="toPay"><div class="sumrow"><span>К оплате сейчас</span><span id="total">—</span></div></div>
+          <div class="mini" id="explain"></div>
+        </div>
+      </div>
+
+      <!-- Действия -->
+      <div class="block" style="display:flex;gap:10px">
+        <button class="btn" onclick="history.back()">Назад</button>
+        <button class="btn pri" style="flex:1" id="go">Оплатить</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // ===== демо-данные из предыдущих шагов
+  // сумма билета (грн): передаём из бронирования или берём 550
+  const base = Number(sessionStorage.getItem('rn_amount') || 550);
+  // что принимает водитель: 'cash','card','both' — задаёт create-trip
+  const accepts = sessionStorage.getItem('rn_pay_accepts') || 'both';
+
+  // комиссионная модель (можно будет подменить беком)
+  const SERVICE_FEE = Number(sessionStorage.getItem('rn_service_fee') || 20); // сервис за платформу
+  const PROC_PCT = Number(sessionStorage.getItem('rn_proc_pct') || 2.5);      // процессинг эквайера, %
+
+  // карта по умолчанию из профиля
+  const def = JSON.parse(localStorage.getItem('rn_profile_card') || '{"brand":"visa","last4":"4242"}');
+  document.getElementById('cardMask').textContent = '**** ' + (def.last4 || '4242');
+
+  // блокируем опции, если водитель их не принимает
+  if(accepts === 'cash'){
+    document.getElementById('opt-card').classList.add('disabled');
+    document.getElementById('opt-apple').classList.add('disabled');
+    document.getElementById('opt-google').classList.add('disabled');
+    document.getElementById('opt-mono').classList.add('disabled');
+    document.getElementById('r-cash').checked = true;
+  } else if(accepts === 'card'){
+    document.getElementById('opt-cash').classList.add('disabled');
+    document.getElementById('r-card').checked = true;
+  } else {
+    document.getElementById('r-card').checked = true;
+  }
+
+  // отрисовка сумм
+  const fmt = n => `${n.toFixed(0)} ₴`;
+  const fareEl = document.getElementById('fare');
+  const svcEl = document.getElementById('svc');
+  const procEl = document.getElementById('proc');
+  const rowProc = document.getElementById('row-proc');
+  const totalEl = document.getElementById('total');
+  const explainEl = document.getElementById('explain');
+
+  fareEl.textContent = fmt(base);
+
+  function currentMethod(){
+    if(document.getElementById('r-cash').checked) return 'cash';
+    if(document.getElementById('r-apple').checked) return 'apple';
+    if(document.getElementById('r-google').checked) return 'google';
+    if(document.getElementById('r-mono').checked) return 'mono';
+    return 'card';
+  }
+
+  function recalc(){
+    const m = currentMethod();
+    const svc = SERVICE_FEE;                // всегда берём сервисный сбор на платформу
+    let proc = 0;
+    let payNow = 0;
+
+    if(m === 'cash'){
+      // наличные: онлайн списываем только сервисный сбор
+      payNow = svc;
+      rowProc.style.display = 'none';
+      explainEl.textContent = 'Наличные: в приложении списывается только сервисный сбор, сумму билета вы платите водителю при встрече.';
+    } else {
+      // любая карта/кошелёк: списываем билет + сервис + процессинг
+      proc = Math.round(base * PROC_PCT / 100);
+      payNow = base + svc + proc;
+      rowProc.style.display = '';
+      explainEl.textContent = `Карта/кошелёк: списывается билет + сервисный сбор + процессинг ${PROC_PCT}%`;
+    }
+    svcEl.textContent = fmt(svc);
+    procEl.textContent = fmt(proc);
+    totalEl.textContent = fmt(payNow);
+  }
+  document.querySelectorAll('input[name="pay"]').forEach(r=>r.addEventListener('change', recalc));
+  recalc();
+
+  // заглушка "оплатить"
+  document.getElementById('go').onclick = ()=>{
+    const method = currentMethod();
+    alert(`ДЕМО: способ = ${method}\nК оплате сейчас: ${document.getElementById('total').textContent}`);
+    // здесь будет редирект в checkout провайдера / SDK
+  };
+</script>
+</body>
+</html>

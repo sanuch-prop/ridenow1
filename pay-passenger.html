@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru"><head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Оплата — RideNow</title>
+<style>
+  :root{--ink:#eaf2ff;--muted:#a6b5cc;--stroke:rgba(255,255,255,.18);--glass-1:rgba(14,21,26,.55);--glass-2:rgba(14,21,26,.35);--gutter:16px}
+  html,body{height:100%;margin:0}
+  body{
+    color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+    background:linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,.55) 35%,rgba(0,0,0,.45) 60%,rgba(0,0,0,.55)),url("image.png") center/cover fixed;
+    padding:var(--gutter);display:flex
+  }
+  main{margin:auto;width:min(760px,calc(100vw - var(--gutter)*2));border:1px solid var(--stroke);border-radius:22px;
+    background:linear-gradient(180deg,var(--glass-1),var(--glass-2));box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  .inner{padding:16px}
+  .card{border:1px solid var(--stroke);border-radius:16px;padding:12px;background:linear-gradient(180deg,rgba(255,255,255,.10),rgba(255,255,255,.06))}
+  .cta{margin-top:10px;height:52px;border:0;border-radius:14px;background:linear-gradient(90deg,#ffb668,#9de9d7);font-weight:900;color:#0b0f12;width:100%}
+  .pill{display:inline-grid;place-items:center;padding:8px 12px;border-radius:14px;font-weight:900;
+    background:linear-gradient(90deg,#b8ff9c,#7dffcf);color:#072e12}
+</style></head>
+<body>
+  <main><div class="inner">
+    <h2>Оплата</h2>
+    <div class="card" id="info"></div>
+    <button class="cta" id="payBtn">Оплатить 25 ₴</button>
+    <button class="cta" id="toActive" style="display:none">К актуальным</button>
+  </div></main>
+
+<script src="rn-core.js"></script>
+<script>
+  // ===== ИНИЦ =====
+  const qs = new URLSearchParams(location.search);
+  const tripId = qs.get('tripId') || RN.get(RN.keys.bookingDraft)?.id || 'kyiv-odesa';
+  const draft  = RN.get(RN.keys.bookingDraft) || { id: tripId, price: 550, from:'Киев', to:'Одесса', date:'16.09.2025' };
+  const info   = document.getElementById('info');
+  const payBtn = document.getElementById('payBtn');
+  const toAct  = document.getElementById('toActive');
+
+  // ваучер = перенос ранее оплаченного сбора 25 ₴
+  const voucher = RN.get(RN.keys.voucher) || null;
+  function canUseVoucher(v){
+    if(!v) return false;
+    const enough = Number(v.amount)>=25;
+    const notUsed = !v.used;
+    const notLockedElse = !v.lockedForTripId || v.lockedForTripId===tripId;
+    return enough && notUsed && notLockedElse;
+  }
+  const usingVoucher = canUseVoucher(voucher);
+
+  function renderInfo(already){
+    const feeText = usingVoucher ? '0 ₴ — покрыт бонусом' : '25 ₴';
+    const extra   = usingVoucher ? ' (комиссия спишется с бонуса)' : '';
+    info.innerHTML = `
+      <div style="font-weight:900">${draft.from} → ${draft.to} • ${draft.date}</div>
+      <div style="margin-top:6px">Сервисный сбор: <strong>${feeText}</strong>${extra}</div>
+      <div>Водителю — наличными: <strong>${RN.fmtMoney(draft.price)}</strong></div>
+      ${already? '<div style="margin-top:8px" class="pill">Эта поездка уже оплачена</div>' : ''}
+    `;
+    payBtn.textContent = usingVoucher ? 'Забронировать без комиссии' : 'Оплатить 25 ₴';
+  }
+
+  // уже оплачивали эту поездку? — защиты от повтора
+  if (RN.isPaid(tripId)) {
+    renderInfo(true);
+    payBtn.style.display = 'none';
+    toAct.style.display  = 'block';
+  } else {
+    renderInfo(false);
+  }
+
+  // аккуратно "сжечь" ваучер, если он есть
+  function consumeVoucher() {
+    if (!usingVoucher) return false;
+    const v = { ...voucher };
+    v.amount = Math.max(0, Number(v.amount) - 25);
+    v.used   = true;
+    v.usedAt = Date.now();
+    v.lastTripId = tripId;
+    delete v.lockedForTripId;
+    RN.set(RN.keys.voucher, v);
+    return true;
+  }
+
+  // ===== ОПЛАТА / ИСПОЛЬЗОВАНИЕ ВАУЧЕРА =====
+  payBtn.onclick = ()=>{
+    // если ваучер — списаний нет, просто фиксируем оплату как выполненную
+    if (usingVoucher) {
+      consumeVoucher();
+      RN.markPaid(tripId); // помечаем как «оплачено» (через бонус)
+    } else {
+      RN.markPaid(tripId); // демо-оплата 25 ₴
+    }
+
+    // создаём актуальную бронь (ожидание подтверждения)
+    RN.set(RN.keys.booking, {
+      id: tripId, from:draft.from, to:draft.to, date:draft.date, price:draft.price,
+      seats:draft.seats||1, comment:draft.comment||'', status:'pending', createdAt: Date.now(), paid: 1
+    });
+
+    // дальше идём в «Актуальная» (ожидание)
+    location.href = 'active.html?state=pending';
+  };
+
+  toAct.onclick = ()=> location.href='active.html';
+</script>
+</body>
+</html>
