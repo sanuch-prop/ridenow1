@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Посадка — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-boarding-check" data-nav="orders">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="boardingTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="boardingTitle">Подтвердите посадку</h1>
+        <p class="card__subtitle">Сообщите водителю код посадки, а затем подтвердите, что вы в машине.</p>
+      </header>
+      <div class="card__body stack" data-boarding>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Детали</h2><span class="badge badge--ghost" data-trip-field="dateText">—</span></div>
+          <div class="status-row">
+            <span>Маршрут: <strong data-trip-field="route">—</strong></span>
+            <span>Время: <strong data-trip-field="timeRange">—</strong></span>
+          </div>
+          <div class="notice-banner">Код посадки: <strong data-trip-field="boardingCode">RN-0000</strong></div>
+        </article>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Водитель</h2></div>
+          <div class="avatar-row">
+            <div class="avatar" data-driver-photo></div>
+            <div class="avatar-row__body">
+              <p class="avatar-row__title" data-driver-name>—</p>
+              <p class="avatar-row__meta"><span data-driver-rating>—</span> • <span data-driver-car>—</span></p>
+            </div>
+          </div>
+        </article>
+        <div class="tile__footer" style="gap:12px">
+          <button class="btn btn-primary btn--lg" data-action="confirm-boarding" type="button">Я уже в машине</button>
+          <button class="btn btn-secondary" data-action="report-missed" type="button">Не нашёл водителя</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

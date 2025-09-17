@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Поездка в пути — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-trip-ongoing" data-nav="orders">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="ongoingTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="ongoingTitle">Поездка в пути</h1>
+        <p class="card__subtitle">Следите за маршрутом и делитесь статусом с друзьями.</p>
+      </header>
+      <div class="card__body stack" data-trip-ongoing>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Маршрут</h2><span class="badge badge--ok" data-trip-field="statusLabel">В пути</span></div>
+          <div class="status-row">
+            <span>Маршрут: <strong data-trip-field="route">—</strong></span>
+            <span>Время: <strong data-trip-field="timeRange">—</strong></span>
+          </div>
+          <div class="progress"><div class="progress__bar" data-progress-bar></div></div>
+        </article>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Водитель</h2></div>
+          <div class="avatar-row">
+            <div class="avatar" data-driver-photo></div>
+            <div class="avatar-row__body">
+              <p class="avatar-row__title" data-driver-name>—</p>
+              <p class="avatar-row__meta"><span data-driver-rating>—</span> • <span data-driver-car>—</span></p>
+            </div>
+          </div>
+          <div class="tile__footer">
+            <button class="btn btn-secondary" data-action="open-map" type="button">Открыть маршрут в Google Maps</button>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Этапы поездки</h2></div>
+          <div class="timeline">
+            <div class="timeline__item"><div class="timeline__icon">📍</div><div class="timeline__body"><h3 class="timeline__title">Посадка</h3><p class="timeline__meta">Киев, Выдубичи</p></div></div>
+            <div class="timeline__item"><div class="timeline__icon">☕</div><div class="timeline__body"><h3 class="timeline__title">Плановая остановка</h3><p class="timeline__meta">АЗС в Умани через 2 часа</p></div></div>
+            <div class="timeline__item"><div class="timeline__icon">🏁</div><div class="timeline__body"><h3 class="timeline__title">Прибытие</h3><p class="timeline__meta">Одесса, ЖД вокзал</p></div></div>
+          </div>
+        </article>
+        <div class="tile__footer" style="gap:12px">
+          <button class="btn btn-primary" data-action="finish-trip" type="button">Завершить поездку</button>
+          <a class="btn btn-secondary" href="passenger-support.html">Связаться с поддержкой</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

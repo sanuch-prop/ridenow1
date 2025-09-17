@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Настройки — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-settings" data-nav="settings">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="settingsTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="settingsTitle">Настройки</h1>
+        <p class="card__subtitle">Выберите, как получать уведомления и чем авторизоваться в приложении.</p>
+      </header>
+      <div class="card__body stack">
+        <article class="panel" data-setting="push">
+          <div class="panel__header"><h2 class="panel__title">Пуш-уведомления</h2><label><input type="checkbox"></label></div>
+          <p class="helper">Напоминаем о посадке, новых предложениях и статусе жалоб.</p>
+        </article>
+        <article class="panel" data-setting="email">
+          <div class="panel__header"><h2 class="panel__title">Email-рассылка</h2><label><input type="checkbox"></label></div>
+          <p class="helper">Получайте копии квитанций и официальные уведомления на почту.</p>
+        </article>
+        <article class="panel" data-setting="marketing">
+          <div class="panel__header"><h2 class="panel__title">Акции и бонусы</h2><label><input type="checkbox"></label></div>
+          <p class="helper">Мы сообщим, когда появится бесплатный сервисный сбор или скидка.</p>
+        </article>
+        <article class="panel" data-setting="biometric">
+          <div class="panel__header"><h2 class="panel__title">Биометрический вход</h2><label><input type="checkbox"></label></div>
+          <p class="helper">Быстрая авторизация по Face ID или отпечатку на поддерживаемых устройствах.</p>
+        </article>
+        <a class="btn btn-secondary" href="passenger-profile.html">К профилю</a>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

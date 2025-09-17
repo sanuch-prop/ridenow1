@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Восстановление доступа — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="forgot" data-dock="hidden">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" role="form" aria-labelledby="forgotTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot" aria-hidden="true"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="forgotTitle">Сброс пароля</h1>
+        <p class="card__subtitle">Введите email — мы отправим письмо с инструкцией и кодом подтверждения.</p>
+      </header>
+      <div class="card__body">
+        <form class="form" data-form="forgot" novalidate>
+          <label class="field">Email
+            <input class="input" type="email" name="email" placeholder="email@example.com" autocomplete="email" required>
+          </label>
+          <button class="btn btn-primary btn--lg" type="submit">Отправить ссылку</button>
+          <div class="helper" style="text-align:center"><a href="index.html">Вернуться ко входу</a></div>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

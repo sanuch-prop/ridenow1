@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Результаты поиска — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-search-results" data-nav="home">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="resultsTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="resultsTitle">Выберите поездку</h1>
+        <p class="card__subtitle">Мы нашли подходящие предложения. Оплатите сервисный сбор и подтвердите посадку.</p>
+      </header>
+      <div class="card__body stack" data-search-results>
+        <article class="panel" data-trip-summary>
+          <div class="panel__header">
+            <h2 class="panel__title">Маршрут</h2>
+            <span class="badge badge--ghost" data-trip-field="dateText">—</span>
+          </div>
+          <div class="status-row">
+            <span>Направление: <strong data-trip-field="route">—</strong></span>
+            <span>Время: <strong data-trip-field="timeRange">—</strong></span>
+            <span>Цена: <strong data-trip-field="priceText">—</strong></span>
+          </div>
+        </article>
+        <div class="list">
+          <article class="tile" data-select-trip data-trip-id="kyiv-odessa-1" data-price="550" data-start-time="08:30" data-end-time="13:15" data-driver-name="Павел" data-driver-rating="4.9" data-driver-car="Toyota Camry">
+            <div class="tile__row"><h3 class="tile__title">Павел • Toyota Camry</h3><span class="badge badge--ok">Проверен</span></div>
+            <p class="tile__meta">08:30 → 13:15 • 3 места • Wi-Fi, зарядки</p>
+            <div class="tile__footer"><span class="badge badge--ghost">550 ₴</span><a class="btn btn-primary btn--sm" href="passenger-order-details.html">Выбрать</a></div>
+          </article>
+          <article class="tile" data-select-trip data-trip-id="kyiv-odessa-2" data-price="520" data-start-time="09:00" data-end-time="13:40" data-driver-name="Марина" data-driver-rating="4.7" data-driver-car="Skoda Octavia">
+            <div class="tile__row"><h3 class="tile__title">Марина • Skoda Octavia</h3><span class="badge badge--wait">Новинка</span></div>
+            <p class="tile__meta">09:00 → 13:40 • 2 места • Некурящий салон</p>
+            <div class="tile__footer"><span class="badge badge--ghost">520 ₴</span><a class="btn btn-secondary btn--sm" href="passenger-order-details.html">Посмотреть</a></div>
+          </article>
+          <article class="tile" data-select-trip data-trip-id="kyiv-odessa-3" data-price="610" data-start-time="07:45" data-end-time="12:30" data-driver-name="Олег" data-driver-rating="5" data-driver-car="Volkswagen Multivan">
+            <div class="tile__row"><h3 class="tile__title">Олег • Multivan</h3><span class="badge badge--ok">Премиум</span></div>
+            <p class="tile__meta">07:45 → 12:30 • 4 места • Доплата багаж 50 ₴</p>
+            <div class="tile__footer"><span class="badge badge--ghost">610 ₴</span><a class="btn btn-secondary btn--sm" href="passenger-order-details.html">Посмотреть</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

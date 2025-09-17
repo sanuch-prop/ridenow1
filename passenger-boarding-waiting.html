@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ожидаем подтверждение — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-boarding-waiting" data-nav="orders">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="waitingTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="waitingTitle">Ожидаем подтверждение водителя</h1>
+        <p class="card__subtitle">Мы уведомили водителя. Обычно подтверждение занимает до 15 минут.</p>
+      </header>
+      <div class="card__body stack" data-waiting>
+        <article class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">Бронь</h2>
+            <span class="badge badge--wait" data-trip-field="statusLabel">Ожидает</span>
+          </div>
+          <div class="status-row">
+            <span>Маршрут: <strong data-trip-field="route">—</strong></span>
+            <span>Время: <strong data-trip-field="timeRange">—</strong></span>
+          </div>
+          <div class="status-row">
+            <span>Сервисный сбор: <strong data-trip-field="feeText">—</strong></span>
+            <span>Оплата: <strong data-trip-field="paymentStatus">—</strong></span>
+          </div>
+          <div class="progress"><div class="progress__bar" data-progress-bar></div></div>
+          <div class="status-row">Осталось: <strong data-timeleft>06:00</strong></div>
+        </article>
+        <div class="notice-banner" data-voucher-banner>Сбор можно покрыть бонусом, если водитель подтвердит поездку.</div>
+        <div class="tile__footer" style="gap:12px">
+          <button class="btn btn-primary" data-action="find-alt" type="button">Искать другие варианты</button>
+          <button class="btn btn-secondary" data-action="cancel-booking" type="button">Отменить бронь</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

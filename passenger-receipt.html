@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Квитанция — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-receipt" data-nav="orders" data-dock="hidden">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" aria-labelledby="receiptTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="receiptTitle">Квитанция поездки</h1>
+        <p class="card__subtitle">Документ для бухгалтерии. Сохраните PDF через диалог печати браузера.</p>
+      </header>
+      <div class="card__body stack" data-receipt>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Данные поездки</h2><span class="badge badge--ghost" data-trip-field="dateText">—</span></div>
+          <div class="kv kv--tight">
+            <div class="kv__key">Маршрут</div><div class="kv__value" data-trip-field="route">—</div>
+            <div class="kv__key">Время</div><div class="kv__value" data-trip-field="timeRange">—</div>
+            <div class="kv__key">Водитель</div><div class="kv__value"><span data-trip-field="driverName">—</span> • <span data-trip-field="driverCar">—</span></div>
+            <div class="kv__key">Номер заказа</div><div class="kv__value" data-trip-field="orderId">—</div>
+          </div>
+        </article>
+        <table class="table">
+          <thead>
+            <tr><th>Услуга</th><th>Сумма</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Поездка</td><td data-trip-field="priceText">—</td></tr>
+            <tr><td>Сервисный сбор</td><td id="receiptFee" data-receipt-fee>—</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><th>Итого</th><th id="receiptTotal" data-receipt-total>—</th></tr>
+          </tfoot>
+        </table>
+        <div class="notice-banner">Оплата сервиса: <strong data-trip-field="paymentStatus">—</strong></div>
+        <a class="btn btn-secondary" href="javascript:window.print()">Скачать / распечатать</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

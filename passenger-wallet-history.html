@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>История кошелька — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-wallet-history" data-nav="wallet" data-dock="hidden">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" aria-labelledby="walletHistoryTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="walletHistoryTitle">История операций</h1>
+        <p class="card__subtitle">Все пополнения, бонусы и списания сервиса.</p>
+      </header>
+      <div class="card__body">
+        <div class="list" data-wallet-history></div>
+        <a class="btn btn-secondary" href="passenger-wallet.html">Назад к кошельку</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

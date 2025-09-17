@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Оплата сервиса — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-order-progress" data-nav="orders" data-dock="hidden">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" aria-labelledby="payTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="payTitle">Оплата сервисного сбора</h1>
+        <p class="card__subtitle">Онлайн списывается только комиссия RideNow. Остальное вы платите водителю при посадке.</p>
+      </header>
+      <div class="card__body" data-payment>
+        <article class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">Поездка</h2>
+            <span class="badge badge--ghost" data-trip-field="dateText">—</span>
+          </div>
+          <div class="status-row">
+            <span>Маршрут: <strong data-trip-field="route">—</strong></span>
+            <span>Время: <strong data-trip-field="timeRange">—</strong></span>
+          </div>
+          <div class="status-row">
+            <span>Стоимость поездки: <strong data-trip-field="priceText">—</strong></span>
+            <span>Сервисный сбор: <strong data-trip-field="feeText">—</strong></span>
+          </div>
+        </article>
+        <div class="notice-banner" data-voucher-banner>Сервисный сбор 25 ₴ оплачивается онлайн.</div>
+        <div class="stack stack--tight">
+          <button class="btn btn-primary btn--lg" data-action="pay-fee" type="button">Оплатить</button>
+          <button class="btn btn-secondary" data-action="skip-payment" type="button">Оплатить позже</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
