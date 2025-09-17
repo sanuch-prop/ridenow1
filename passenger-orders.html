@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Мои поездки — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-orders" data-nav="orders">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="ordersTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="ordersTitle">Мои поездки</h1>
+        <p class="card__subtitle">Список активных броней и завершённых поездок. Здесь же можно открыть квитанцию или оставить отзыв.</p>
+      </header>
+      <div class="card__body stack">
+        <article class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">Активная бронь</h2>
+            <span class="badge badge--ghost">Сегодня</span>
+          </div>
+          <div class="list" data-orders-active></div>
+        </article>
+        <article class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">Завершённые поездки</h2>
+            <span class="badge badge--ghost">История</span>
+          </div>
+          <div class="list" data-orders-history></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

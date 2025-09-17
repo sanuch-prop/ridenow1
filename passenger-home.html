@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Главная — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-home" data-nav="home">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="homeTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="homeTitle">Ваша поездка</h1>
+        <p class="card__subtitle">Следите за активной бронью, просматривайте историю и возвращайтесь к любимым маршрутам.</p>
+      </header>
+      <div class="card__body stack">
+        <article class="panel" data-bind="active-trip">
+          <div class="panel__header">
+            <h2 class="panel__title" data-trip-field="route">—</h2>
+            <span class="badge badge--wait" data-trip-field="statusLabel">Ожидает подтверждения</span>
+          </div>
+          <div class="status-row">
+            <span>Время: <strong data-trip-field="timeRange">—</strong></span>
+            <span>Стоимость: <strong data-trip-field="priceText">—</strong></span>
+            <span>Оплата: <strong data-trip-field="paymentStatus">—</strong></span>
+          </div>
+          <div class="avatar-row">
+            <div class="avatar" data-driver-photo></div>
+            <div class="avatar-row__body">
+              <p class="avatar-row__title" data-driver-name>—</p>
+              <p class="avatar-row__meta"><span data-driver-rating>—</span> • <span data-driver-car>—</span></p>
+            </div>
+          </div>
+          <div class="tile__footer">
+            <a class="btn btn-primary" href="passenger-order-details.html">Открыть бронь</a>
+            <a class="btn btn-secondary" href="passenger-search.html">Изменить маршрут</a>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel__header">
+            <h2 class="panel__title">История поездок</h2>
+            <span class="badge badge--ghost">Последние</span>
+          </div>
+          <div class="list" data-history-list></div>
+          <div class="helper" style="text-align:center">Нужна квитанция? <a href="passenger-receipt.html">Открыть</a></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Пополнение кошелька — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-wallet-topup" data-nav="wallet" data-dock="hidden">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" aria-labelledby="topupTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="topupTitle">Пополнить кошелёк</h1>
+        <p class="card__subtitle">Списания происходят через защищённого платежного провайдера.</p>
+      </header>
+      <div class="card__body">
+        <form class="form" data-form="topup" novalidate>
+          <label class="field">Сумма пополнения
+            <input class="input" type="number" name="amount" min="50" step="10" placeholder="Например, 200" required>
+          </label>
+          <label class="field">Способ оплаты
+            <select class="input" name="method">
+              <option>Visa / Mastercard</option>
+              <option>Apple Pay</option>
+              <option>Google Pay</option>
+            </select>
+          </label>
+          <button class="btn btn-primary btn--lg" type="submit">Пополнить баланс</button>
+          <a class="btn btn-secondary" href="passenger-wallet.html">Назад</a>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

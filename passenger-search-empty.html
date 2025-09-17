@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Поездки не найдены — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="static" data-nav="home">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" aria-labelledby="emptySearchTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="emptySearchTitle">Нет поездок по фильтру</h1>
+        <p class="card__subtitle">Попробуйте изменить время отправления или выберите соседний город.</p>
+      </header>
+      <div class="card__body stack">
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Что можно сделать</h2></div>
+          <ul class="list">
+            <li class="tile">Попробуйте дату на день раньше или позже.</li>
+            <li class="tile">Сократите время в пути — выберите прямую поездку.</li>
+            <li class="tile">Подпишитесь на уведомления, чтобы узнать о новых предложениях.</li>
+          </ul>
+        </article>
+        <a class="btn btn-primary" href="passenger-search.html">Вернуться к поиску</a>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

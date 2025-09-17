@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Верификация профиля — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-profile-verification" data-nav="settings">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="verificationTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="verificationTitle">Статус верификации</h1>
+        <p class="card__subtitle">Мы проверяем документы, чтобы на платформе оставались только настоящие пользователи.</p>
+      </header>
+      <div class="card__body stack">
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Ваши данные</h2><span class="badge badge--ok">Проверено</span></div>
+          <div class="avatar avatar--lg" data-profile-photo></div>
+          <div class="kv kv--tight">
+            <div class="kv__key">Имя</div><div class="kv__value" data-profile="fullName">—</div>
+            <div class="kv__key">Телефон</div><div class="kv__value" data-profile="phone">—</div>
+            <div class="kv__key">Город</div><div class="kv__value" data-profile="city">—</div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Фото автомобиля</h2></div>
+          <div class="photo-grid">
+            <div class="photo-grid__item"><div class="photo-grid__title">Перед</div><div class="photo-grid__body"><div class="photo-grid__placeholder" data-car-slot="front">Ждём фото</div></div></div>
+            <div class="photo-grid__item"><div class="photo-grid__title">Интерьер</div><div class="photo-grid__body"><div class="photo-grid__placeholder" data-car-slot="frontSeats">Ждём фото</div></div></div>
+            <div class="photo-grid__item"><div class="photo-grid__title">Задний ряд</div><div class="photo-grid__body"><div class="photo-grid__placeholder" data-car-slot="rearSeats">Ждём фото</div></div></div>
+            <div class="photo-grid__item"><div class="photo-grid__title">Багажник</div><div class="photo-grid__body"><div class="photo-grid__placeholder" data-car-slot="trunk">Ждём фото</div></div></div>
+          </div>
+        </article>
+        <div class="notice-banner">Нужна помощь? Свяжитесь с поддержкой — мы поможем загрузить документы.</div>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

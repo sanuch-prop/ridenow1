@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Отзыв о поездке — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-review" data-nav="orders" data-dock="hidden">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" aria-labelledby="reviewTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="reviewTitle">Поделитесь впечатлением</h1>
+        <p class="card__subtitle">Нам важно знать, всё ли прошло гладко. Комментарии видит только команда модерации.</p>
+      </header>
+      <div class="card__body">
+        <form class="form" data-form="review" novalidate>
+          <fieldset class="panel" style="border:none;padding:0" aria-label="Оценка поездки">
+            <legend class="helper">Оцените поездку</legend>
+            <div class="chip-row" style="justify-content:center">
+              <label class="btn btn-secondary btn--sm"><input type="radio" name="rating" value="5" style="display:none" checked>★★★★★</label>
+              <label class="btn btn-secondary btn--sm"><input type="radio" name="rating" value="4" style="display:none">★★★★☆</label>
+              <label class="btn btn-secondary btn--sm"><input type="radio" name="rating" value="3" style="display:none">★★★☆☆</label>
+              <label class="btn btn-secondary btn--sm"><input type="radio" name="rating" value="2" style="display:none">★★☆☆☆</label>
+              <label class="btn btn-secondary btn--sm"><input type="radio" name="rating" value="1" style="display:none">★☆☆☆☆</label>
+            </div>
+          </fieldset>
+          <label class="field">Комментарий
+            <textarea class="textarea" name="text" placeholder="Что понравилось? Что можем улучшить?" required></textarea>
+          </label>
+          <button class="btn btn-primary btn--lg" type="submit">Отправить отзыв</button>
+          <a class="btn btn-secondary" href="passenger-trip-finish.html">Вернуться</a>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

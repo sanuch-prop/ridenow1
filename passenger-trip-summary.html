@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Сводка поездки — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="static" data-nav="orders">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card" aria-labelledby="summaryTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="summaryTitle">Сводка поездки</h1>
+        <p class="card__subtitle">Важные факты о последней поездке: длительность, стоимость, отзывы.</p>
+      </header>
+      <div class="card__body stack">
+        <article class="panel" data-trip-finish>
+          <div class="panel__header"><h2 class="panel__title">Основные данные</h2></div>
+          <div class="kv kv--tight">
+            <div class="kv__key">Маршрут</div><div class="kv__value" data-trip-field="route">—</div>
+            <div class="kv__key">Время</div><div class="kv__value" data-trip-field="timeRange">—</div>
+            <div class="kv__key">Стоимость</div><div class="kv__value" data-trip-field="priceText">—</div>
+          </div>
+        </article>
+        <article class="panel">
+          <div class="panel__header"><h2 class="panel__title">Отзыв</h2></div>
+          <p class="helper">Посмотреть и изменить отзыв можно в разделе «Заказы».</p>
+          <a class="btn btn-secondary" href="passenger-review.html">Оставить отзыв</a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <nav class="dock">
+    <div class="dock__inner">
+      <a class="dock__item" data-nav-item="home" href="passenger-home.html"><span class="dock__icon">🏠</span><span>Главная</span></a>
+      <a class="dock__item" data-nav-item="orders" href="passenger-orders.html"><span class="dock__icon">📋</span><span>Заказы</span></a>
+      <a class="dock__item" data-nav-item="wallet" href="passenger-wallet.html"><span class="dock__icon">💳</span><span>Кошелёк</span></a>
+      <a class="dock__item" data-nav-item="settings" href="passenger-settings.html"><span class="dock__icon">⚙️</span><span>Настройки</span></a>
+    </div>
+  </nav>
+</body>
+</html>

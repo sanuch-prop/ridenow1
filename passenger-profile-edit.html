@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Редактирование профиля — RideNow</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="ui.js" defer></script>
+</head>
+<body data-page="passenger-profile-edit" data-nav="settings" data-dock="hidden">
+  <div class="bg" aria-hidden="true"></div>
+  <main class="app">
+    <section class="card card--auto" aria-labelledby="editProfileTitle">
+      <header class="card__header">
+        <div class="brand"><span class="dot"></span><span>RideNow</span></div>
+        <h1 class="card__title" id="editProfileTitle">Редактировать профиль</h1>
+        <p class="card__subtitle">Обновите контактные данные, чтобы водитель мог связаться с вами при необходимости.</p>
+      </header>
+      <div class="card__body">
+        <form class="form" data-form="profile-edit" novalidate>
+          <label class="field">Фамилия и имя
+            <input class="input" type="text" name="fullName" required>
+          </label>
+          <label class="field">Телефон
+            <input class="input" type="tel" name="phone" required>
+          </label>
+          <label class="field">Email
+            <input class="input" type="email" name="email" required>
+          </label>
+          <label class="field">Город
+            <input class="input" type="text" name="city" required>
+          </label>
+          <button class="btn btn-primary btn--lg" type="submit">Сохранить изменения</button>
+          <a class="btn btn-secondary" href="passenger-profile.html">Отмена</a>
+        </form>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
